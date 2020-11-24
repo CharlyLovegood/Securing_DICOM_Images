@@ -114,4 +114,102 @@ def key_update(key_B, B_C, B, k1, k2, k3, k4, n):
     k2 = np.array(k2)
     k3 = np.array(k3)
     k4 = np.array(k4)
-    return ((key_B + np.outer(B_C.sum(0),B_D.sum(1)) + s(k1, k2, k3, k4)) % (2**n)).tolist()
+    
+    res = ((key_B + np.outer(B_C.sum(0),B_D.sum(1)) + s(k1, k2, k3, k4)) % (2**n))
+    return res
+
+
+def permute_rows(img, S, n):
+    """
+    img[n x n]: картинка
+    S[n]: блок для перестановки элементов в строках картинки
+    n: размерность
+    """
+    img_pi = np.zeros((n, n), dtype=np.uint8)
+    
+    for i in range(n):
+        arr = []
+        for j in range(n):
+            arr.append([S[j], img[i][j]])
+        
+        for j in range(n - 1, 0, -1):
+            for k in range(0, j):
+                if arr[k][0] > arr[k + 1][0]: 
+                    arr[k], arr[k + 1] = arr[k + 1], arr[k]
+        
+        for j in range(n):
+            img_pi[i][j] = arr[j][1]
+   
+    return img_pi
+
+
+def permute_columns(img, S, n):
+    """
+    img[n x n]: картинка
+    S[n]: блок для перестановки элементов в строках картинки
+    n: размерность
+    """
+    img_spi = np.zeros((n, n), dtype=np.uint8)
+    
+    for i in range(n):
+        arr = []
+        for j in range(n):
+            arr.append([S[j], img[j][i]])
+        
+        for j in range(n - 1, 0, -1):
+            for k in range(0, j):
+                if arr[k][0] > arr[k + 1][0]: 
+                    arr[k], arr[k + 1] = arr[k + 1], arr[k]
+        
+        for j in range(n):
+            img_spi[j][i] = arr[j][1]
+        
+    return img_spi
+
+
+def repermute_rows(img, S, n):
+    """
+    img[n x n]: картинка
+    S[n]: блок для перестановки элементов в строках картинки
+    n: размерность
+    """
+    img_pi = np.zeros((n, n), dtype=np.uint8)
+    
+    for i in range(n):
+        arr = []
+        for j in range(n):
+            arr.append([S[j], j])
+        
+        for j in range(n - 1, 0, -1):
+            for k in range(0, j):
+                if arr[k][0] > arr[k + 1][0]: 
+                    arr[k], arr[k + 1] = arr[k + 1], arr[k]
+        
+        for j in range(n):
+            img_pi[i][arr[j][1]] = img[i][j]
+    
+    return img_pi
+
+
+def repermute_columns(img, S, n):
+    """
+    img[n x n]: картинка
+    S[n]: блок для перестановки элементов в строках картинки
+    n: размерность
+    """
+    img_spi = np.zeros((n, n), dtype=np.uint8)
+    
+    for i in range(n):
+        arr = []
+        for j in range(n):
+            arr.append([S[j], j])
+        
+        for j in range(n - 1, 0, -1):
+            for k in range(0, j):
+                if arr[k][0] > arr[k + 1][0]: 
+                    arr[k], arr[k + 1] = arr[k + 1], arr[k]
+        
+        for j in range(n):
+            img_spi[arr[j][1]][i] = img[j][i]
+        
+    return img_spi
