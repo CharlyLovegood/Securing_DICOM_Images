@@ -25,3 +25,17 @@ def Entr(img,n):
 
 def Hist(img,n):
     return plt.hist(np.array(img).flatten(),bins=2**n)
+
+def NPCR(img,cr_img):
+    img_a = np.array(img)
+    cr_img_a = np.array(cr_img)
+    sh = img_a.shape
+    M_N = sh[0]*sh[1]
+    return ((img_a != cr_img_a).astype(int).sum()/M_N)*100
+
+def UACI(img,cr_img,n):
+    img_a = np.array(img)
+    cr_img_a = np.array(cr_img)
+    sh = img_a.shape
+    M_N_255 = sh[0]*sh[1]*(2**n - 1)
+    return (np.abs((img_a - cr_img_a)).sum()/M_N_255)*100
