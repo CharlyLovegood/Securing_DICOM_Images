@@ -115,7 +115,7 @@ def key_update(key_B, B_C, B, k1, k2, k3, k4, n):
     k3 = np.array(k3)
     k4 = np.array(k4)
     
-    res = ((key_B + np.outer(B_C.sum(0),B_D.sum(1)) + s(k1, k2, k3, k4)) % (2**n))
+    res = Arnold((key_B + np.outer(B_C.sum(0),B_D.sum(1)) + s(k1, k2, k3, k4)) % (2**n))
     return res
 
 
