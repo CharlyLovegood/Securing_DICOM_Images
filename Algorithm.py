@@ -116,8 +116,15 @@ def key_update(key_B, B_C, B, k1, k2, k3, k4, n):
     k4 = np.array(k4)
     
     res = ((key_B + np.outer(B_C.sum(0),B_D.sum(1)) + s(k1, k2, k3, k4)) % (2**n))
-    return res
+    return Arnold(res)
 
+def key_update_hk(key_B, B_C, B, s_1, n):
+    key_B = np.array(key_B)
+    B_C = np.array(B_C)
+    B_D = np.array(B)
+    
+    res = ((key_B + np.outer(B_C.sum(0),B_D.sum(1)) + s_1) % (2**n))
+    return Arnold(res)
 
 def permute_rows(img, S, n):
     """
