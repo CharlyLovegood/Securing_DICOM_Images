@@ -16,7 +16,7 @@ def EQ(im, enc_im, n):
     
     return (np.abs(H_L-H_L_e)).sum()/(Len+1)
 
-def Entr(img,n):
+def Entr(img):
     arr_fl = np.array(img).flatten()
 
     P_i = np.unique(arr_fl, return_counts=True)[1]/(img.shape[0]*img.shape[1])
